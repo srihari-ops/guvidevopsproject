@@ -1,7 +1,15 @@
 #!/bin/bash
 
-# Stop and remove the container if it already exists
-docker rm -f guvi-project-react-app 2>/dev/null || true
+# Stop and remove old container if exists
+docker stop guvi-prod-container || true
+docker rm guvi-prod-container || true
 
-# Run the container
-docker run -d --name guvi-project-react-app -p 80:80 srihariops/guvi_reactapp_prod:latest
+# Pull the latest image from Docker Hub
+docker pull srihariops/guvidevopsproject-prod:latest
+
+# Run the container with port mapping
+docker run -d \
+  --name guvi-prod-container \
+  -p 80:80 \
+  srihariops/guvidevopsproject-prod:latest
+
